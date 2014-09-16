@@ -57,4 +57,18 @@ class Account extends AbstractEntity
     public function move() {
 
     }
+    
+    /**
+     * Create a new [sub]account entity. In this case we need to "PUT" the entity with
+     * an existing account_id
+	 *
+     */
+    public function create($id) {
+        $payload = $this->getPayload();
+        $this->setTokenValue('account_id', $id);
+        $response = $this->put($payload);
+        $entity = $response->getData();
+        $this->setEntity($entity);
+        return $this;
+    }
 }
