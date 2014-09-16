@@ -291,7 +291,7 @@ abstract class AbstractEntity extends AbstractResource
      *
      *
      */
-    private function getEntity() {
+    protected function getEntity() {
         $id = $this->getId();
         if(is_null($this->entity) && !empty($id)) {
             $this->fetch();
@@ -299,6 +299,17 @@ abstract class AbstractEntity extends AbstractResource
         return ($this->entity ?: new stdClass);
     }
 
+    /**
+     *
+     *
+     */
+    protected function getPayload() {
+        $shell = new stdClass();
+        $shell->data = $this->getEntity();
+
+        return json_encode($shell);
+    }
+    
     /**
      *
      *
@@ -320,14 +331,5 @@ abstract class AbstractEntity extends AbstractResource
         }
     }
 
-    /**
-     *
-     *
-     */
-    private function getPayload() {
-        $shell = new stdClass();
-        $shell->data = $this->getEntity();
 
-        return json_encode($shell);
-    }
 }
